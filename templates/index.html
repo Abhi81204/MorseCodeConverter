@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morse Code Converter</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("https://2.bp.blogspot.com/-_3whB542d6g/WIqjUtWPjPI/AAAAAAAAdOw/yUL9eCdKiAglZF1dmwvkuTiK2mmbVGQdgCEw/s1600/skn-1.jpg");
+        background-size: cover;
+        font-family: "Georgia", serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+        animation: fadeIn 1s ease; 
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .navbar,
+      .footer {
+        background-color: #FFA3FD; 
+        color: white;
+        transition: background-color 0.5s ease; 
+      }
+
+      .navbar a {
+        color: black !important; 
+      }
+
+      .navbar a:hover{
+        color: white !important;
+      }
+
+      .container {
+        margin-top: 50px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+      }
+
+      h1,
+      h4 {
+        font-family: "Times New Roman", serif;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .form-group label,
+      .output-container h4,
+      .info p {
+        font-weight: bold;
+        font-size: 2rem;
+        color: #ecf0f1; 
+        transition: color 0.5s ease;
+      }
+
+      .output-container {
+        margin-top: 20px;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border-radius: 5px;
+      }
+
+      .form-group label {
+        font-weight: bold;
+      }
+
+      #inputText,
+      #outputText {
+        text-align: left;
+      }
+
+      .footer {
+        text-align: center;
+        background-color: #FFA3FD; 
+        font-size: 20px;
+        color: black;
+        padding: 20px;
+      }
+
+      .footer a {
+        color : blue;
+      }
+
+      .footer img {
+        width: 30px;
+        height: 30px;
+        margin: 0 10px;
+      }
+
+      .info {
+        margin-top: 20px;
+        color: #ecf0f1; 
+        font-size: 1.1rem;
+      }
+
+      #outputText {
+        font-size: 1.5rem; 
+      }
+
+      .navbar-nav .nav-item:hover .nav-link {
+        color: #ecf0f1; 
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">
+        <img
+          src="https://i.ibb.co/RhBTNTf/Ar-high-resolution-logo-black-transparent.png"
+          alt="Logo"
+          width="30"
+          height="30"
+          style="margin-bottom: 5px;"
+        />
+        Morse Code Converter
+      </a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1 class="text-center">Morse Code Converter</h1>
+
+      <form id="morseForm">
+        <div class="form-group">
+          <label for="inputText">Input:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputText"
+            placeholder="Type sentence"
+            required
+          />
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="runMorseCode()">
+          Run Morse Code
+        </button>
+      </form>
+
+      <div class="output-container">
+        <h4>Output:</h4>
+        <textarea
+          class="form-control"
+          id="outputText"
+          rows="3"
+          readonly
+        ></textarea>
+        <div class="info">
+            <p style="font-size: 1rem; font-weight: normal;">
+                Morse Code is a method used in telecommunication to encode text
+                characters as sequences of two different signal durations, called
+                dots and dashes.
+              </p>
+              <p style="font-size: 1rem; font-weight: normal;">
+                It was developed by Samuel Morse and Alfred Vail in the 1830s and
+                1840s for use with their new invention, the telegraph.
+              </p>
+              <p style="font-size: 1rem; font-weight: normal;">
+                Morse Code was widely used for long-distance communication before
+                the advent of radio communication.
+              </p>
+              <p style="font-size: 1rem; font-weight: normal;">
+                The simplicity of Morse Code made it a practical and efficient
+                method of communication, especially during the early days of
+                telecommunication technology.
+              </p>
+              <p style="font-size: 1rem; font-weight: normal;">
+                Despite technological advancements, Morse Code is still relevant
+                and finds applications in various fields, including amateur radio
+                and aviation.
+              </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <small>&copy; 2023 Morse Code Converter</small><br />
+      <a href="mailto:abhiramrayidi03@gmail.com">
+        <img src="https://cdn-icons-png.flaticon.com/128/6244/6244710.png" alt="Email Logo" />
+        abhiramrayidi03@gmail.com
+      </a>
+      <a href="https://www.instagram.com/abhiram_rayidi/">
+        <img src="https://cdn-icons-png.flaticon.com/128/1400/1400829.png" alt="Instagram Logo" />
+        @abhiram_rayidi
+      </a>
+    </div>
+
+    <script>
+      function runMorseCode() {
+        var inputText = document.getElementById("inputText").value;
+        fetch("/translate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ input: inputText }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("outputText").value = data.output;
+          });
+      }
+    </script>
+  </body>
+</html>
