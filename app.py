@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-import pygame
 import time
-import os
+import pygame
 
 app = Flask(__name__)
 
@@ -13,8 +12,8 @@ def index():
 def about():
     return render_template('about.html')
 
-@app.route('/translate', methods=['POST'])
-def translate():
+@app.route('/generate', methods=['POST'])
+def generate():
     user_input = request.json.get('input', '')
 
     morse_code_dict = {
@@ -24,6 +23,29 @@ def translate():
         'Y': '-.--', 'Z': '--..'
     }
     morse_code_translation = []
+
+    for char in user_input:
+        if char == ' ':
+            morse_code_translation.append('/')
+        else:
+            char = char.upper()
+            code = morse_code_dict.get(char, ' ')
+            if code:
+                morse_code_translation.append(code)
+
+    morse_output = '  '.join(morse_code_translation)
+
+    return jsonify({'output': morse_output})
+
+@app.route('/translate', methods=['POST'])
+def translate():
+    morse_code_dict = {
+        'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
+        'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
+        'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+        'Y': '-.--', 'Z': '--..'
+    }
+    user_input = request.json.get('input', '')
 
     pygame.mixer.init()
 
@@ -43,27 +65,18 @@ def translate():
 
     for char in user_input:
         if char == ' ':
-            morse_code_translation.append('/')
+            time.sleep(0.8)
         else:
             char = char.upper()
             code = morse_code_dict.get(char, ' ')
             if code:
-                morse_code_translation.append(code)
-
-    morse_output = '  '.join(morse_code_translation)
-
-
-    for letter_code in morse_code_translation:
-        if letter_code == '/':
-            time.sleep(0.8)
-        else:
-            play_morse_code(letter_code)
-            time.sleep(0.4)
+                play_morse_code(code)
+                time.sleep(0.4)
 
     dot_sound.stop()
     dash_sound.stop()
 
-    return jsonify({'output': morse_output})
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True)
