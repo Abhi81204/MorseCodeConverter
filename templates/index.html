@@ -212,7 +212,9 @@
     <script>
       function runMorseCode() {
         var inputText = document.getElementById("inputText").value;
-        fetch("/translate", {
+    
+        // Fetch to /generate to get the output and display it
+        fetch("/generate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -222,8 +224,18 @@
           .then((response) => response.json())
           .then((data) => {
             document.getElementById("outputText").value = data.output;
+    
+            // After displaying the output, fetch to /translate to play Morse code audio
+            fetch("/translate", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ input: inputText }),
+            });
           });
       }
     </script>
+    
   </body>
 </html>
